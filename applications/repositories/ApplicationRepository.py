@@ -20,8 +20,8 @@ class ApplicationRepository:
         self.user_service = user_service
 
     def create(self, **kwargs) -> models.Application:
-        owner_id = kwargs['owner']['id']
-        manager_id = kwargs['manager']['id']
+        owner_id = kwargs['owner_id']
+        manager_id = kwargs['manager_id']
 
         try:
             owner = self.user_service.get(owner_id)
