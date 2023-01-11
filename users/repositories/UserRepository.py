@@ -5,7 +5,7 @@ from django.db.models import QuerySet
 from users import models, exceptions
 
 
-class UserRepositoriesInterface(Protocol):
+class UserRepositoryInterface(Protocol):
 
     def get(self, pk: int) -> models.User: ...
 
@@ -14,7 +14,7 @@ class UserRepositoriesInterface(Protocol):
     def check_role(self, pk: int, role: str) -> bool: ...
 
 
-class UserRepositories:
+class UserRepository:
     model = models.User
 
     def get(self, pk: int) -> models.User:
