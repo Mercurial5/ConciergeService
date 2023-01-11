@@ -37,8 +37,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = None
     email = models.EmailField(unique=True)
 
-    role = models.OneToOneField(my_models.Role, on_delete=models.PROTECT, null=True, blank=True)
-    city = models.OneToOneField(my_models.City, on_delete=models.PROTECT, null=True, blank=True)
+    role = models.ForeignKey(my_models.Role, on_delete=models.PROTECT, null=True, blank=True)
+    city = models.ForeignKey(my_models.City, on_delete=models.PROTECT, null=True, blank=True)
 
     phone = models.CharField(max_length=15)
 
@@ -51,7 +51,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['role', 'city', 'phone']
 
     def __str__(self):
         return f'{self.email}'
