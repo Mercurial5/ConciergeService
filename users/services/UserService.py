@@ -6,7 +6,7 @@ from users import models, repositories
 
 
 class UserServiceInterface(Protocol):
-    repos: repositories.UserRepositoryInterface
+    repo: repositories.UserRepositoryInterface
 
     def get(self, pk: int) -> models.User: ...
 
@@ -16,10 +16,10 @@ class UserServiceInterface(Protocol):
 
 
 class UserService:
-    repos: repositories.UserRepositoryInterface = repositories.UserRepository()
+    repo: repositories.UserRepositoryInterface = repositories.UserRepository()
 
     def get(self, pk: int) -> models.User:
-        return self.repos.get(pk)
+        return self.repo.get(pk)
 
     def get_list(self) -> QuerySet[models.User]:
-        return self.repos.get_list()
+        return self.repo.get_list()
