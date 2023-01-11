@@ -1,0 +1,32 @@
+[
+  {
+    "model": "users.Role",
+    "fields": {
+      "name": "admin"
+    }
+  },
+  {
+    "model": "users.Role",
+    "fields": {
+      "name": "client"
+    }
+  },
+  {
+    "model": "users.Role",
+    "fields": {
+      "name": "company"
+    }
+  },
+  {
+    "model": "users.Role",
+    "fields": {
+      "name": "manager"
+    }
+  },
+  {
+    "model": "users.Role",
+    "fields": {
+      "name": "partner"
+    }
+  }
+]

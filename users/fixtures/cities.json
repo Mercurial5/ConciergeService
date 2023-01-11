@@ -1,0 +1,14 @@
+[
+  {
+    "model": "users.City",
+    "fields": {
+      "name": "Astana"
+    }
+  },
+  {
+    "model": "users.City",
+    "fields": {
+      "name": "Almaty"
+    }
+  }
+]
