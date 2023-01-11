@@ -8,7 +8,7 @@ from users.services import UserServiceInterface
 
 
 class ApplicationRepositoryInterface(Protocol):
-    def create(self, owner_id: int, manager_id: int) -> models.Application: ...
+    def create(self, **kwargs) -> models.Application: ...
 
     def get_list(self) -> QuerySet[models.Application]: ...
 
@@ -19,7 +19,10 @@ class ApplicationRepository:
     def __init__(self, user_service: UserServiceInterface):
         self.user_service = user_service
 
-    def create(self, owner_id: int, manager_id: int) -> models.Application:
+    def create(self, **kwargs) -> models.Application:
+        owner_id = kwargs['owner']['id']
+        manager_id = kwargs['manager']['id']
+
         try:
             owner = self.user_service.get(owner_id)
         except UserDoesNotExist:
@@ -36,7 +39,7 @@ class ApplicationRepository:
         if manager.role.name != 'manager':
             raise exceptions.NotManager(f'User with id {manager_id} is not a manager')
 
-        return self.model.objects.create(owner_id=owner_id, manager_id=manager_id)
+        return self.model.objects.create(**kwargs)
 
     def get_list(self) -> QuerySet[models.Application]:
         return self.model.objects.all()
