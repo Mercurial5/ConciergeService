@@ -8,7 +8,7 @@ from users.services import UserServiceInterface
 
 
 class ApplicationServiceInterface(Protocol):
-    repos: ApplicationRepositoryInterface
+    repo: ApplicationRepositoryInterface
 
     def create(self, owner_id: int, manager_id: int) -> models.Application: ...
 
@@ -17,11 +17,11 @@ class ApplicationServiceInterface(Protocol):
 
 class ApplicationService:
 
-    def __init__(self, user_repos: UserServiceInterface):
-        self.repos: ApplicationRepositoryInterface = ApplicationRepository(user_repos)
+    def __init__(self, user_repo: UserServiceInterface):
+        self.repo: ApplicationRepositoryInterface = ApplicationRepository(user_repo)
 
     def create(self, owner_id: int, manager_id: int) -> models.Application:
-        return self.repos.create(owner_id, manager_id)
+        return self.repo.create(owner_id, manager_id)
 
     def get_list(self) -> QuerySet[models.Application]:
-        return self.repos.get_list()
+        return self.repo.get_list()
