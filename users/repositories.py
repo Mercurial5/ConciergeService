@@ -25,12 +25,3 @@ class UserRepositories:
 
     def get_list(self) -> QuerySet[models.User]:
         return self.model.objects.all()
-
-    def check_role(self, pk: int, role: str) -> bool:
-        try:
-            role = models.Role.objects.filter(name=role)
-        except models.Role.DoesNotExist:
-            raise exceptions.RoleDoesNotExist(f'Role with name {role} does not exist.')
-
-        user = self.get(pk)
-        return user.role.name == role

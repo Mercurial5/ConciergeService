@@ -23,6 +23,3 @@ class UserServices:
 
     def get_list(self) -> QuerySet[models.User]:
         return self.repos.get_list()
-
-    def check_role(self, pk: int, role: str) -> bool:
-        return self.repos.check_role(pk, role)
