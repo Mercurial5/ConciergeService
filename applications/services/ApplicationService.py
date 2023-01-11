@@ -10,7 +10,7 @@ from users.services import UserServiceInterface
 class ApplicationServiceInterface(Protocol):
     repo: ApplicationRepositoryInterface
 
-    def create(self, owner_id: int, manager_id: int) -> models.Application: ...
+    def create(self, **kwargs) -> models.Application: ...
 
     def get_list(self) -> QuerySet[models.Application]: ...
 
@@ -20,8 +20,8 @@ class ApplicationService:
     def __init__(self, user_repo: UserServiceInterface):
         self.repo: ApplicationRepositoryInterface = ApplicationRepository(user_repo)
 
-    def create(self, owner_id: int, manager_id: int) -> models.Application:
-        return self.repo.create(owner_id, manager_id)
+    def create(self, **kwargs) -> models.Application:
+        return self.repo.create(**kwargs)
 
     def get_list(self) -> QuerySet[models.Application]:
         return self.repo.get_list()
