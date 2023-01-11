@@ -1,0 +1,1 @@
+from applications.repositories.ApplicationRepository import ApplicationRepositoryInterface, ApplicationRepository
