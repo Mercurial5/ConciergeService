@@ -11,8 +11,6 @@ class UserRepositoryInterface(Protocol):
 
     def get_list(self) -> QuerySet[models.User]: ...
 
-    def check_role(self, pk: int, role: str) -> bool: ...
-
 
 class UserRepository:
     model = models.User
