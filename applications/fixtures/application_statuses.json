@@ -1,0 +1,26 @@
+[
+  {
+    "model": "applications.ApplicationStatus",
+    "fields": {
+      "name": "Not Started"
+    }
+  },
+  {
+    "model": "applications.ApplicationStatus",
+    "fields": {
+      "name": "In Progress"
+    }
+  },
+  {
+    "model": "applications.ApplicationStatus",
+    "fields": {
+      "name": "Completed"
+    }
+  },
+  {
+    "model": "applications.ApplicationStatus",
+    "fields": {
+      "name": "Cancelled"
+    }
+  }
+]
