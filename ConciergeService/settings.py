@@ -149,7 +149,11 @@ DJOSER = {
     'HIDE_USERS': False,
     'PERMISSIONS': {
         'user': ['rest_framework.permissions.IsAuthenticated'],
+    },
+    'SERIALIZERS': {
+        'user': 'users.serializers.UserSerializer',
     }
+
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
