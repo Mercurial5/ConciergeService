@@ -1,0 +1,39 @@
+[
+  {
+    "model": "applications.ServiceCategory",
+    "fields": {
+      "id": 1,
+      "parent_id": null,
+      "name": "Transport"
+    }
+  },
+  {
+    "model": "applications.ServiceCategory",
+    "fields": {
+      "id": 2,
+      "parent_id": null,
+      "name": "Housing"
+    }
+  },
+  {
+    "model": "applications.ServiceCategory",
+    "fields": {
+      "parent_id": 1,
+      "name": "Bus"
+    }
+  },
+  {
+    "model": "applications.ServiceCategory",
+    "fields": {
+      "parent_id": 1,
+      "name": "Car"
+    }
+  },
+  {
+    "model": "applications.ServiceCategory",
+    "fields": {
+      "parent_id": 2,
+      "name": "Hotel"
+    }
+  }
+]
