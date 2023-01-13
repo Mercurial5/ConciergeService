@@ -1,17 +1,21 @@
 from users.exceptions import UserDoesNotExist
 
 
-class OwnerDoesNotExist(UserDoesNotExist):
+class ApplicationException(BaseException):
     pass
 
 
-class ManagerDoesNotExist(UserDoesNotExist):
+class OwnerDoesNotExist(ApplicationException, UserDoesNotExist):
     pass
 
 
-class NotClientOrCompany(BaseException):
+class ManagerDoesNotExist(ApplicationException, UserDoesNotExist):
     pass
 
 
-class NotManager(BaseException):
+class NotClientOrCompany(ApplicationException):
+    pass
+
+
+class NotManager(ApplicationException):
     pass
