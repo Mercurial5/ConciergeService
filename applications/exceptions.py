@@ -19,3 +19,7 @@ class NotClientOrCompany(ApplicationException):
 
 class NotManager(ApplicationException):
     pass
+
+
+class NoServices(ApplicationException):
+    pass
