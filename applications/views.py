@@ -11,7 +11,7 @@ from users.services import UserService
 
 class ApplicationViewSet(ModelViewSet):
     serializer_class = serializers.ApplicationSerializer
-    service = services.ApplicationService(UserService(), services.ServiceService())
+    service = services.ApplicationService(UserService())
     permission_classes: list[Type[BasePermission]] = [IsAuthenticated]
 
     def get_queryset(self):

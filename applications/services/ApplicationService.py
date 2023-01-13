@@ -21,8 +21,8 @@ class ApplicationServiceInterface(Protocol):
 
 class ApplicationService:
 
-    def __init__(self, user_service: UserServiceInterface, service_service: services.ServiceServiceInterface):
-        self.repo: ApplicationRepositoryInterface = ApplicationRepository(user_service, service_service)
+    def __init__(self, user_service: UserServiceInterface):
+        self.repo: ApplicationRepositoryInterface = ApplicationRepository(user_service)
 
     def create(self, data: OrderedDict) -> models.Application:
         return self.repo.create(data)

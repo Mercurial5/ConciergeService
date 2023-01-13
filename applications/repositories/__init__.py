@@ -1,2 +1,1 @@
 from applications.repositories.ApplicationRepository import ApplicationRepositoryInterface, ApplicationRepository
-from applications.repositories.ServiceRepository import ServiceRepositoryInterface, ServiceRepository
