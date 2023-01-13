@@ -1,1 +1,3 @@
-from applications.serializers.ApplicationSerializer import ApplicationSerializer, ApplicationCreateSerializer
+from applications.serializers.ApplicationSerializer import ApplicationCreateSerializer
+from applications.serializers.ApplicationSerializer import ApplicationPartiallyUpdateSerializer
+from applications.serializers.ApplicationSerializer import ApplicationSerializer

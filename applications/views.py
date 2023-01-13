@@ -25,6 +25,8 @@ class ApplicationViewSet(ModelViewSet):
     def get_serializer_class(self):
         if self.request.method == 'POST':
             return serializers.ApplicationCreateSerializer
+        if self.request.method == 'PATCH':
+            return serializers.ApplicationPartiallyUpdateSerializer
 
         return self.serializer_class
 
