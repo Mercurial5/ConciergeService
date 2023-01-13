@@ -15,13 +15,21 @@ class ApplicationViewSet(ModelViewSet):
     def get_queryset(self):
         return self.service.get_list()
 
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return serializers.ApplicationCreateSerializer
+
+        return self.serializer_class
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         try:
-            self.service.create(**serializer.validated_data)
+            service = self.service.create(**serializer.validated_data)
         except exceptions.ApplicationException as e:
             return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = self.get_serializer(service)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
