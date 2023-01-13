@@ -10,7 +10,7 @@ class ServiceServiceInterface(Protocol):
 
     def create(self, data: OrderedDict) -> models.Service: ...
 
-    def get_list(self) -> QuerySet[models.Service]: ...
+    def get_list(self, **kwargs) -> QuerySet[models.Service]: ...
 
 
 class ServiceService:
@@ -21,5 +21,5 @@ class ServiceService:
     def create(self, data: OrderedDict) -> models.Service:
         return self.repo.create(data)
 
-    def get_list(self) -> QuerySet[models.Service]:
-        return self.repo.get_list()
+    def get_list(self, **kwargs) -> QuerySet[models.Service]:
+        return self.repo.get_list(**kwargs)

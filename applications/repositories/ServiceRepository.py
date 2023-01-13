@@ -8,7 +8,7 @@ from applications import models
 class ServiceRepositoryInterface(Protocol):
     def create(self, data: OrderedDict) -> models.Service: ...
 
-    def get_list(self) -> QuerySet[models.Service]: ...
+    def get_list(self, **kwargs) -> QuerySet[models.Service]: ...
 
 
 class ServiceRepository:
@@ -17,5 +17,5 @@ class ServiceRepository:
     def create(self, data: OrderedDict) -> models.Service:
         return self.model.objects.create(**data)
 
-    def get_list(self) -> QuerySet[models.Service]:
-        return self.model.objects.all()
+    def get_list(self, **kwargs) -> QuerySet[models.Service]:
+        return self.model.objects.filter(**kwargs).all()

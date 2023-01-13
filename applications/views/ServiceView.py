@@ -14,4 +14,4 @@ class ServiceViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.
     permission_classes: list[Type[BasePermission]] = [IsAuthenticated]
 
     def get_queryset(self):
-        return self.service.get_list()
+        return self.service.get_list(application=self.kwargs['application_pk'])
