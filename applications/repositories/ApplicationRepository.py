@@ -43,7 +43,8 @@ class ApplicationRepository:
 
         application = self.model.objects.create(**data)
         for service in services_data:
-            application.services.add(self.service_service.create(service))
+            # application.services.add(self.service_service.create(service))
+            application.services.create(**service)
 
         return application
 

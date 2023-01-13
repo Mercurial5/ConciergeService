@@ -22,11 +22,10 @@ class ApplicationSerializer(serializers.ModelSerializer):
 
 
 class _ApplicationServicesCreateSerializer(serializers.ModelSerializer):
-    application = serializers.IntegerField(source='application_id')
 
     class Meta:
         model = models.Service
-        fields = ['category', 'application', 'description']
+        fields = ['category', 'description']
 
 
 class ApplicationCreateSerializer(serializers.ModelSerializer):
