@@ -27,6 +27,9 @@ class ApplicationRepository:
     def create(self, data: OrderedDict) -> models.Application:
         owner_id = data['owner_id']
 
+        services_data = data['services']
+        del data['services']
+
         try:
             owner = self.user_service.get(owner_id)
         except UserDoesNotExist:
@@ -35,9 +38,11 @@ class ApplicationRepository:
         if owner.role.name not in ('client', 'company'):
             raise exceptions.NotClientOrCompany(f'User with id {owner_id} is not a client or a company.')
 
-        application = self.model.objects.create(owner_id=owner_id)
+        if len(services_data) < 1:
+            raise exceptions.NoServices('Application should have 1 or more services.')
 
-        for service in data['services']:
+        application = self.model.objects.create(**data)
+        for service in services_data:
             application.services.add(self.service_service.create(service))
 
         return application
