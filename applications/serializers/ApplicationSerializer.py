@@ -21,6 +21,7 @@ class _ApplicationServicesSerializer(serializers.ModelSerializer):
 
 
 class ApplicationSerializer(serializers.ModelSerializer):
+    status = serializers.CharField(source='status.name')
     owner = _ApplicationUserSerializer(read_only=True)
     manager = _ApplicationUserSerializer(read_only=True)
     services = _ApplicationServicesSerializer(read_only=True, many=True)
