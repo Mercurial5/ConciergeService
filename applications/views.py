@@ -1,16 +1,18 @@
+from typing import Type
+
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticated
 
-from applications import serializers, services, exceptions
+from applications import serializers, services, exceptions, permissions
 from users.services import UserService
 
 
 class ApplicationViewSet(ModelViewSet):
     serializer_class = serializers.ApplicationSerializer
     service = services.ApplicationService(UserService())
-    permission_classes = [IsAuthenticated]
+    permission_classes: list[Type[BasePermission]] = [IsAuthenticated]
 
     def get_queryset(self):
         return self.service.get_list()
@@ -20,6 +22,14 @@ class ApplicationViewSet(ModelViewSet):
             return serializers.ApplicationCreateSerializer
 
         return self.serializer_class
+
+    def get_permissions(self):
+        permission_classes = self.permission_classes
+
+        if self.request.method == 'DELETE':
+            permission_classes.append(permissions.IsAdmin)
+
+        return [permission() for permission in permission_classes]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
