@@ -15,7 +15,12 @@ class ApplicationViewSet(ModelViewSet):
     permission_classes: list[Type[BasePermission]] = [IsAuthenticated]
 
     def get_queryset(self):
-        return self.service.get_list()
+        user = self.request.user
+        queryset = self.service.get_list()
+
+        if self.action == "list" and user.role.name not in ['admin', 'manager']:
+            queryset = queryset.filter(pk=user.pk)
+        return queryset
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
