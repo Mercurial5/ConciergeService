@@ -11,7 +11,7 @@ from users.services import UserService
 
 class ApplicationViewSet(ModelViewSet):
     serializer_class = serializers.ApplicationSerializer
-    service = services.ApplicationService(UserService())
+    service = services.ApplicationService(UserService(), services.ServiceService())
     permission_classes: list[Type[BasePermission]] = [IsAuthenticated]
 
     def get_queryset(self):
@@ -36,7 +36,7 @@ class ApplicationViewSet(ModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         try:
-            service = self.service.create(**serializer.validated_data)
+            service = self.service.create(serializer.validated_data)
         except exceptions.ApplicationException as e:
             return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 

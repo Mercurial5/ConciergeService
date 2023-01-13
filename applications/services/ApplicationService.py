@@ -1,10 +1,14 @@
-from typing import Protocol, OrderedDict
+from __future__ import annotations
+from typing import Protocol, OrderedDict, TYPE_CHECKING
 
 from django.db.models import QuerySet
 
 from applications import models
 from applications.repositories import ApplicationRepositoryInterface, ApplicationRepository
 from users.services import UserServiceInterface
+
+if TYPE_CHECKING:
+    from applications import services
 
 
 class ApplicationServiceInterface(Protocol):
@@ -17,11 +21,11 @@ class ApplicationServiceInterface(Protocol):
 
 class ApplicationService:
 
-    def __init__(self, user_repo: UserServiceInterface):
-        self.repo: ApplicationRepositoryInterface = ApplicationRepository(user_repo)
+    def __init__(self, user_service: UserServiceInterface, service_service: services.ServiceServiceInterface):
+        self.repo: ApplicationRepositoryInterface = ApplicationRepository(user_service, service_service)
 
-    def create(self, **kwargs) -> models.Application:
-        return self.repo.create(**kwargs)
+    def create(self, data: OrderedDict) -> models.Application:
+        return self.repo.create(data)
 
     def get_list(self) -> QuerySet[models.Application]:
         return self.repo.get_list()

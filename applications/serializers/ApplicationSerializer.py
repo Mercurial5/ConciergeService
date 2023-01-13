@@ -21,8 +21,17 @@ class ApplicationSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class _ApplicationServicesCreateSerializer(serializers.ModelSerializer):
+    application = serializers.IntegerField(source='application_id')
+
+    class Meta:
+        model = models.Service
+        fields = ['service_category', 'application', 'description']
+
+
 class ApplicationCreateSerializer(serializers.ModelSerializer):
     owner = serializers.IntegerField(source='owner_id')
+    services = _ApplicationServicesCreateSerializer(many=True)
 
     class Meta:
         model = models.Application

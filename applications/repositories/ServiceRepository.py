@@ -15,7 +15,6 @@ class ServiceRepository:
     model = models.Service
 
     def create(self, data: OrderedDict) -> models.Service:
-        print(data)
         return self.model.objects.create(**data)
 
     def get_list(self) -> QuerySet[models.Service]:
