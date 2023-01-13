@@ -10,7 +10,8 @@ class Application(models.Model):
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
                                 related_name='managing_applications', null=True)
 
-    status = models.OneToOneField(my_models.ApplicationStatus, on_delete=models.PROTECT, null=True, blank=True)
+    status = models.ForeignKey(my_models.ApplicationStatus, on_delete=models.PROTECT,
+                               default=my_models.ApplicationStatus.get_default_pk())
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
