@@ -1,7 +1,14 @@
-from rest_framework.routers import DefaultRouter
+from django.urls import path, include
+from rest_framework_nested.routers import SimpleRouter, NestedSimpleRouter
 from applications import views
 
-router = DefaultRouter()
+router = SimpleRouter()
 router.register('', views.ApplicationViewSet, basename='applications')
 
-urlpatterns = router.urls
+applications_router = NestedSimpleRouter(router, '', lookup='application')
+applications_router.register('services', views.ServiceViewSet, basename='services')
+
+urlpatterns = [
+    path('', include(router.urls)),
+    path('', include(applications_router.urls))
+]
