@@ -19,7 +19,7 @@ class ApplicationViewSet(ModelViewSet):
         queryset = self.service.get_list()
 
         if self.action == "list" and user.role.name not in ['admin', 'manager']:
-            queryset = queryset.filter(pk=user.pk)
+            queryset = queryset.filter(owner_id=user.pk)
         return queryset
 
     def get_serializer_class(self):
@@ -50,3 +50,7 @@ class ApplicationViewSet(ModelViewSet):
         serializer = self.get_serializer(service)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def list(self, request, *args, **kwargs):
+        print('a')
+        return super().list(request, *args, **kwargs)
