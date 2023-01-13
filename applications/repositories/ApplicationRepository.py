@@ -1,4 +1,4 @@
-from typing import Protocol
+from typing import Protocol, OrderedDict
 
 from django.db.models import QuerySet
 
@@ -8,7 +8,7 @@ from users.services import UserServiceInterface
 
 
 class ApplicationRepositoryInterface(Protocol):
-    def create(self, **kwargs) -> models.Application: ...
+    def create(self, data: OrderedDict) -> models.Application: ...
 
     def get_list(self) -> QuerySet[models.Application]: ...
 
@@ -19,8 +19,8 @@ class ApplicationRepository:
     def __init__(self, user_service: UserServiceInterface):
         self.user_service = user_service
 
-    def create(self, **kwargs) -> models.Application:
-        owner_id = kwargs['owner_id']
+    def create(self, data: OrderedDict) -> models.Application:
+        owner_id = data['owner_id']
 
         try:
             owner = self.user_service.get(owner_id)

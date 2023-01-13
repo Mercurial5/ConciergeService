@@ -1,4 +1,4 @@
-from typing import Protocol
+from typing import Protocol, OrderedDict
 
 from django.db.models import QuerySet
 
@@ -10,7 +10,7 @@ from users.services import UserServiceInterface
 class ApplicationServiceInterface(Protocol):
     repo: ApplicationRepositoryInterface
 
-    def create(self, **kwargs) -> models.Application: ...
+    def create(self, data: OrderedDict) -> models.Application: ...
 
     def get_list(self) -> QuerySet[models.Application]: ...
 
