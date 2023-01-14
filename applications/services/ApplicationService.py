@@ -1,14 +1,11 @@
 from __future__ import annotations
-from typing import Protocol, OrderedDict, TYPE_CHECKING
+from typing import Protocol, OrderedDict
 
 from django.db.models import QuerySet
 
 from applications import models
 from applications.repositories import ApplicationRepositoryInterface, ApplicationRepository
 from users.services import UserServiceInterface
-
-if TYPE_CHECKING:
-    from applications import services
 
 
 class ApplicationServiceInterface(Protocol):
