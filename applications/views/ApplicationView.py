@@ -1,11 +1,12 @@
 from typing import Type
 
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from applications import serializers, services, exceptions, permissions
+from applications import serializers, services, exceptions, permissions, filters
 from users.services import UserService
 
 
@@ -13,6 +14,8 @@ class ApplicationViewSet(ModelViewSet):
     serializer_class = serializers.ApplicationSerializer
     service = services.ApplicationService(UserService())
     permission_classes: list[Type[BasePermission]] = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = filters.ApplicationFilter
 
     def get_queryset(self):
         user = self.request.user
@@ -50,7 +53,3 @@ class ApplicationViewSet(ModelViewSet):
         serializer = self.get_serializer(service)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    def list(self, request, *args, **kwargs):
-        print('a')
-        return super().list(request, *args, **kwargs)
