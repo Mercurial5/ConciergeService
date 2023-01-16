@@ -1,4 +1,4 @@
-from typing import Protocol
+from typing import Protocol, OrderedDict
 
 from django.db.models import QuerySet
 
@@ -10,6 +10,12 @@ class UserRepositoryInterface(Protocol):
     def get(self, pk: int) -> models.User: ...
 
     def get_list(self) -> QuerySet[models.User]: ...
+
+    def create(self, data: OrderedDict) -> models.User: ...
+
+    def set_password(self, user: models.User, password: str = None) -> str: ...
+
+    def activate(self, user: models.User): ...
 
 
 class UserRepository:
@@ -23,3 +29,21 @@ class UserRepository:
 
     def get_list(self) -> QuerySet[models.User]:
         return self.model.objects.all()
+
+    def create(self, data: OrderedDict) -> models.User:
+        user = self.model.objects.create(**data)
+
+        return user
+
+    def set_password(self, user: models.User, password: str = None) -> str:
+        if password is None:
+            password = self.model.objects.make_random_password()
+
+        user.set_password(password)
+        user.save(update_fields=['password'])
+
+        return password
+
+    def activate(self, user: models.User):
+        user.is_active = True
+        user.save(update_fields=['is_active'])

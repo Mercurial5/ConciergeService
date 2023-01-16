@@ -42,7 +42,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     phone = models.CharField(max_length=15)
 
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
 
     created = models.DateTimeField(auto_now_add=True)

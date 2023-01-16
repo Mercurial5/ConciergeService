@@ -139,7 +139,6 @@ REST_FRAMEWORK = {
 DJOSER = {
     'ACTIVATION_URL': '#/activate/{uid}/{token}',
     'PASSWORD_RESET_CONFIRM_URL': '#/reset_password/{uid}/{token}',
-    'SEND_ACTIVATION_EMAIL': True,
     'EMAIL': {
         'activation': 'djoser.email.ActivationEmail',
         'confirmation': 'djoser.email.ConfirmationEmail',
