@@ -6,5 +6,5 @@ class ApplicationStatus(models.Model):
 
     @staticmethod
     def get_default_pk():
-        status, created = ApplicationStatus.objects.get_or_create(name='Pending')
+        status, created = ApplicationStatus.objects.get_or_create(name='Not Started')
         return status.pk

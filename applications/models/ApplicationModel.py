@@ -1,7 +1,11 @@
 from django.conf import settings
 from django.db import models
 
-from applications import models as my_models
+
+def get_default_application_status():
+    from applications.models import ApplicationStatus
+
+    return ApplicationStatus.get_default_pk()
 
 
 class Application(models.Model):
@@ -10,8 +14,8 @@ class Application(models.Model):
     manager = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
                                 related_name='managing_applications', null=True)
 
-    status = models.ForeignKey(my_models.ApplicationStatus, on_delete=models.PROTECT,
-                               default=my_models.ApplicationStatus.get_default_pk())
+    status = models.ForeignKey('applications.ApplicationStatus', on_delete=models.PROTECT,
+                               default=get_default_application_status)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
