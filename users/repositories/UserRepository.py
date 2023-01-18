@@ -15,7 +15,10 @@ class UserRepositoryInterface(Protocol):
 
     def set_password(self, user: models.User, password: str = None) -> str: ...
 
-    def activate(self, user: models.User): ...
+    @staticmethod
+    def activate(user: models.User): ...
+
+    def delete(self, pk: int): ...
 
 
 class UserRepository:
@@ -44,6 +47,10 @@ class UserRepository:
 
         return password
 
-    def activate(self, user: models.User):
+    @staticmethod
+    def activate(user: models.User):
         user.is_active = True
         user.save(update_fields=['is_active'])
+
+    def delete(self, pk: int):
+        self.model.objects.get(pk=pk).delete()

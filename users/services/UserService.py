@@ -18,6 +18,8 @@ class UserServiceInterface(Protocol):
 
     def activate(self, user: models.User): ...
 
+    def delete(self, pk: int): ...
+
 
 class UserService:
     repo: repositories.UserRepositoryInterface = repositories.UserRepository()
@@ -36,3 +38,6 @@ class UserService:
 
     def activate(self, user: models.User):
         self.repo.activate(user)
+
+    def delete(self, pk: int):
+        self.repo.delete(pk)
