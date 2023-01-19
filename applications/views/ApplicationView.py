@@ -6,8 +6,9 @@ from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from applications import serializers, services, exceptions, permissions, filters
+from applications import serializers, services, exceptions, filters
 from users.services import UserService
+from users.permissions import IsAdmin
 
 
 class ApplicationViewSet(ModelViewSet):
@@ -37,7 +38,7 @@ class ApplicationViewSet(ModelViewSet):
         permission_classes = self.permission_classes
 
         if self.request.method == 'DELETE':
-            permission_classes.append(permissions.IsAdmin)
+            permission_classes.append(IsAdmin)
 
         return [permission() for permission in permission_classes]
 
