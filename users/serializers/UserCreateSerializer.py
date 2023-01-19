@@ -1,7 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.password_validation import validate_password
-from django.core import exceptions as django_exceptions
-from django.db import IntegrityError, transaction
 from djoser.conf import settings
 from rest_framework import serializers
 

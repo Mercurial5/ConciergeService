@@ -40,7 +40,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     role = models.ForeignKey(my_models.Role, on_delete=models.PROTECT)
     city = models.ForeignKey(my_models.City, on_delete=models.PROTECT)
 
+    name = models.CharField(max_length=40)
+    surname = models.CharField(max_length=40)
     phone = models.CharField(max_length=15)
+    address = models.CharField(max_length=255, null=True)
+
+    job_title = models.CharField(max_length=255, null=True)
+    company_name = models.CharField(max_length=255, null=True)
 
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
@@ -51,7 +57,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['role', 'city']
+    REQUIRED_FIELDS = ['role', 'city', 'name', 'surname']
 
     def __str__(self):
         return f'{self.email}'

@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from djoser.conf import settings
 from rest_framework import serializers
 
 from users import models
@@ -12,4 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.User
-        fields = ('id', 'email', 'role', 'city', 'phone', 'created')
+        fields = tuple(User.REQUIRED_FIELDS) + (
+            settings.LOGIN_FIELD,
+            settings.USER_ID_FIELD,
+        )
