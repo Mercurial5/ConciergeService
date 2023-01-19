@@ -1,11 +1,12 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
+from rest_framework.response import Response
 
 from applications.exceptions import ApplicationException
 from applications.serializers import CreateFirstApplicationSerializer, ApplicationCreateSerializer
 from applications.services import ApplicationService
+from users.serializers import UserCreateSerializer
 from users.services import UserService
 
 
@@ -15,8 +16,11 @@ def create_first_application(request):
     serializer.is_valid(raise_exception=True)
     data = serializer.validated_data
 
+    user_serializer = UserCreateSerializer(data=serializer.data['user'])
+    user_serializer.is_valid(raise_exception=True)
+
     user_service = UserService()
-    user = user_service.create(data['user'])
+    user = user_service.create(user_serializer.validated_data)
 
     data['owner'] = user.pk
     application_serializer = ApplicationCreateSerializer(data=data)

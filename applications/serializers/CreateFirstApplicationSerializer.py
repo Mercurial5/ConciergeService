@@ -2,14 +2,9 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from applications import models
+from users.serializers import UserCreateSerializer
 
 User = get_user_model()
-
-
-class _CreateFirstApplicationUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('email', 'phone', 'city', 'role')
 
 
 class _CreateFirstApplicationServicesSerializer(serializers.ModelSerializer):
@@ -21,7 +16,7 @@ class _CreateFirstApplicationServicesSerializer(serializers.ModelSerializer):
 
 
 class CreateFirstApplicationSerializer(serializers.ModelSerializer):
-    user = _CreateFirstApplicationUserSerializer()
+    user = UserCreateSerializer()
     services = _CreateFirstApplicationServicesSerializer(many=True)
 
     class Meta:
