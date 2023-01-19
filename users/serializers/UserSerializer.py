@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from djoser.conf import settings
 from rest_framework import serializers
 
 from users import models
@@ -13,7 +12,4 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.User
-        fields = tuple(User.REQUIRED_FIELDS) + (
-            settings.LOGIN_FIELD,
-            settings.USER_ID_FIELD,
-        )
+        exclude = ('groups', 'user_permissions', 'last_login', 'is_superuser', 'is_staff', 'password')
