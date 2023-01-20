@@ -1,0 +1,57 @@
+[
+  {
+    "model": "users.User",
+    "fields": {
+      "email": "admin@gmail.com",
+      "password": "pbkdf2_sha256$390000$Ej3wX0ufvsV2YBn47QTXOp$2QXx/OMML3h2I6ng6TLpvfnsdpl4C3N/VmywDmMQID4=",
+      "name": "Admin",
+      "surname": "Admin",
+      "role": 1,
+      "city": 1
+    }
+  },
+  {
+    "model": "users.User",
+    "fields": {
+      "email": "manager@gmail.com",
+      "password": "pbkdf2_sha256$390000$Ej3wX0ufvsV2YBn47QTXOp$2QXx/OMML3h2I6ng6TLpvfnsdpl4C3N/VmywDmMQID4=",
+      "name": "Manager",
+      "surname": "Manager",
+      "role": 2,
+      "city": 1
+    }
+  },
+  {
+    "model": "users.User",
+    "fields": {
+      "email": "client@gmail.com",
+      "password": "pbkdf2_sha256$390000$Ej3wX0ufvsV2YBn47QTXOp$2QXx/OMML3h2I6ng6TLpvfnsdpl4C3N/VmywDmMQID4=",
+      "name": "Client",
+      "surname": "Client",
+      "role": 3,
+      "city": 1
+    }
+  },
+  {
+    "model": "users.User",
+    "fields": {
+      "email": "compqny@gmail.com",
+      "password": "pbkdf2_sha256$390000$Ej3wX0ufvsV2YBn47QTXOp$2QXx/OMML3h2I6ng6TLpvfnsdpl4C3N/VmywDmMQID4=",
+      "name": "Company",
+      "surname": "Company",
+      "role": 4,
+      "city": 1
+    }
+  },
+  {
+    "model": "users.User",
+    "fields": {
+      "email": "partner@gmail.com",
+      "password": "pbkdf2_sha256$390000$Ej3wX0ufvsV2YBn47QTXOp$2QXx/OMML3h2I6ng6TLpvfnsdpl4C3N/VmywDmMQID4=",
+      "name": "Partner",
+      "surname": "Partner",
+      "role": 5,
+      "city": 1
+    }
+  }
+]
