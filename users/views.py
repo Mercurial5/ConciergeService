@@ -15,6 +15,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
     token_generator = default_token_generator
     user_service = services.UserService()
+    permission_classes = [IsAuthenticated]
 
     def permission_denied(self, request, **kwargs):
         if (
