@@ -3,13 +3,7 @@ from rest_framework import serializers
 
 from applications import models
 
-
-class _ApplicationUserSerializer(serializers.ModelSerializer):
-    role = serializers.CharField(source='role.name')
-
-    class Meta:
-        model = get_user_model()
-        fields = ['id', 'email', 'role']
+from users.serializers import UserOuterSerializer
 
 
 class _ApplicationServicesSerializer(serializers.ModelSerializer):
@@ -22,8 +16,8 @@ class _ApplicationServicesSerializer(serializers.ModelSerializer):
 
 class ApplicationSerializer(serializers.ModelSerializer):
     status = serializers.CharField(source='status.name')
-    owner = _ApplicationUserSerializer(read_only=True)
-    manager = _ApplicationUserSerializer(read_only=True)
+    owner = UserOuterSerializer(read_only=True)
+    manager = UserOuterSerializer(read_only=True)
     services = _ApplicationServicesSerializer(read_only=True, many=True)
 
     class Meta:
