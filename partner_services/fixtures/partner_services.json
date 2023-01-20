@@ -1,0 +1,20 @@
+[
+  {
+    "model": "partner_services.PartnerService",
+    "fields": {
+      "partner": 5,
+      "service_category": 4,
+      "name": "Partner Service 1",
+      "price": 15000.00
+    }
+  },
+  {
+    "model": "partner_services.PartnerService",
+    "fields": {
+      "partner": 5,
+      "service_category": 5,
+      "name": "Partner Service 2",
+      "price": 6700000.00
+    }
+  }
+]
