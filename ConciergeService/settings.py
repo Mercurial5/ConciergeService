@@ -48,7 +48,8 @@ INSTALLED_APPS = [
 
     'users',
     'applications',
-    'partner_services'
+    'partner_services',
+    'documents'
 ]
 
 MIDDLEWARE = [
