@@ -1,3 +1,5 @@
+from users.serializers.CitySerializer import CitySerializer
+from users.serializers.RoleSerializer import RoleSerializer
 from users.serializers.UserCreateSerializer import UserCreateSerializer
 from users.serializers.UserOuterSerializer import UserOuterSerializer
 from users.serializers.UserSerializer import UserSerializer

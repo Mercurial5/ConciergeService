@@ -8,7 +8,7 @@ from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from users import services, serializers, permissions, email, exceptions
+from users import services, serializers, permissions, email, exceptions, models
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -269,3 +269,15 @@ class UserViewSet(viewsets.ModelViewSet):
         email.ActivationEmail(self.request, context).send(to)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class RolesViewSet(viewsets.ModelViewSet):
+    queryset = models.Role.objects.all()
+    serializer_class = serializers.RoleSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class CitiesViewSet(viewsets.ModelViewSet):
+    queryset = models.City.objects.all()
+    serializer_class = serializers.CitySerializer
+    permission_classes = [IsAuthenticated]
