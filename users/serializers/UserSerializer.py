@@ -7,9 +7,6 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
-    role = serializers.CharField(source='role.name')
-    city = serializers.CharField(source='city.name')
-
     class Meta:
         model = models.User
         exclude = ('groups', 'user_permissions', 'last_login', 'is_superuser', 'is_staff', 'password')
