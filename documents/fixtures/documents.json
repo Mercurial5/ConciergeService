@@ -1,0 +1,20 @@
+[
+  {
+    "model": "documents.DocumentType",
+    "fields": {
+      "name": "ID"
+    }
+  },
+  {
+    "model": "documents.DocumentType",
+    "fields": {
+      "name": "Insurance"
+    }
+  },
+  {
+    "model": "documents.DocumentType",
+    "fields": {
+      "name": "Passport"
+    }
+  }
+]
