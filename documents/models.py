@@ -13,4 +13,4 @@ class Document(models.Model):
     type = models.ForeignKey(DocumentType, on_delete=models.PROTECT)
 
     name = models.CharField(max_length=255)
-    document = models.FileField(upload_to='documents/docs/')
+    document = models.FileField(upload_to='media/docs/')

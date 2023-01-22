@@ -4,5 +4,5 @@ venv
 .env
 db.sqlite3
 
-documents/docs/*
-!documents/docs/.gitkeep
+media/docs/*
+!media/docs/.gitkeep
