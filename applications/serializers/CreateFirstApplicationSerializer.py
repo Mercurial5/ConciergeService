@@ -9,10 +9,11 @@ User = get_user_model()
 
 class _CreateFirstApplicationServicesSerializer(serializers.ModelSerializer):
     category = serializers.IntegerField()
+    date_from = serializers.DateField()
 
     class Meta:
         model = models.Service
-        fields = ['category', 'description']
+        fields = ['category', 'description', 'date_from', 'date_to']
 
 
 class CreateFirstApplicationSerializer(serializers.ModelSerializer):

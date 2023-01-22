@@ -7,8 +7,8 @@ class Service(models.Model):
     application = models.ForeignKey(my_models.Application, on_delete=models.PROTECT, related_name='services')
 
     description = models.TextField()
-    date_from = models.DateTimeField(null=True)
-    date_to = models.DateTimeField(null=True)
+    date_from = models.DateField(null=True)
+    date_to = models.DateField(null=True)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
