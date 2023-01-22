@@ -38,7 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
 
     role = models.ForeignKey(my_models.Role, on_delete=models.PROTECT)
-    city = models.ForeignKey(my_models.City, on_delete=models.PROTECT)
+    city = models.ForeignKey(my_models.City, on_delete=models.PROTECT, null=True)
 
     name = models.CharField(max_length=40)
     surname = models.CharField(max_length=40)
