@@ -249,6 +249,15 @@ class UserViewSet(viewsets.ModelViewSet):
     #         settings.EMAIL.username_changed_confirmation(self.request, context).send(to)
     #     return Response(status=status.HTTP_204_NO_CONTENT)
 
+    @action(['head'], detail=False, url_path=r'exists/(?P<user_email>[^/]+)')
+    def exists(self, request, user_email):
+        try:
+            print(user_email)
+            models.User.objects.get(email=user_email)
+            return Response(status=status.HTTP_200_OK)
+        except models.User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
     @action(['get'], detail=True)
     def activate(self, request, pk, *args, **kwargs):
         try:
