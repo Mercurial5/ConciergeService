@@ -1,0 +1,14 @@
+[
+  {
+    "model": "chat.MessageType",
+    "fields": {
+      "name": "service"
+    }
+  },
+  {
+    "model": "chat.MessageType",
+    "fields": {
+      "name": "starred"
+    }
+  }
+]

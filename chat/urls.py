@@ -1,8 +1,7 @@
-from django.urls import path, include
-from chat import views as chat_views
-from django.contrib.auth.views import LoginView, LogoutView
+from rest_framework.routers import DefaultRouter
+from chat import views
 
-urlpatterns = [
-    path("", chat_views.chatPage, name="chat-page"),
+router = DefaultRouter()
+router.register('', views.ChatViewSet)
 
-]
+urlpatterns = router.urls

@@ -14,6 +14,11 @@ def get_chat(pk: int) -> tuple[int, int]:
         return 0, 0
 
 
+@database_sync_to_async
+def create_message(**kwargs):
+    models.Message.objects.create(**kwargs)
+
+
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         await self.channel_layer.group_add(
@@ -32,6 +37,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
         chat_id = text_data_json['to']
+        message_type_id = text_data_json['message_type_id']
 
         manager, collocutor = await get_chat(chat_id)
 
@@ -39,6 +45,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         if current_user.id in [collocutor, manager]:
             to_user = collocutor if current_user.id == manager else manager
+
+            await create_message(chat_id=chat_id, sender_id=current_user.id, type_id=message_type_id,
+                                 content=message)
 
             await self.channel_layer.group_send(
                 str(to_user), {
