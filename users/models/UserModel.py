@@ -48,6 +48,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     job_title = models.CharField(max_length=255, null=True)
     company_name = models.CharField(max_length=255, null=True)
 
+    # Partners
+    company_type = models.CharField(max_length=3, null=True)
+    code = models.IntegerField(null=True)
+    IIN = models.CharField(max_length=15, null=True)
+    contract = models.FileField(upload_to='media/contracts/', null=True)
+
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
 

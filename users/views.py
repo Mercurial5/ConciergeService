@@ -1,4 +1,5 @@
 from django.contrib.auth.tokens import default_token_generator
+from django_filters.rest_framework import DjangoFilterBackend
 from djoser import utils
 from djoser.compat import get_user_email
 from djoser.conf import settings
@@ -8,7 +9,7 @@ from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from users import services, serializers, permissions, email, exceptions, models
+from users import services, serializers, permissions, email, exceptions, models, filters
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -16,6 +17,8 @@ class UserViewSet(viewsets.ModelViewSet):
     token_generator = default_token_generator
     user_service = services.UserService()
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = filters.UsersFilter
 
     def permission_denied(self, request, **kwargs):
         if (
