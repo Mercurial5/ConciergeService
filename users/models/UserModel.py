@@ -38,7 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
 
     role = models.ForeignKey(my_models.Role, on_delete=models.PROTECT)
-    city = models.ForeignKey(my_models.City, on_delete=models.PROTECT)
+    city = models.ForeignKey(my_models.City, on_delete=models.PROTECT, null=True)
 
     name = models.CharField(max_length=40)
     surname = models.CharField(max_length=40)
@@ -47,6 +47,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     job_title = models.CharField(max_length=255, null=True)
     company_name = models.CharField(max_length=255, null=True)
+
+    # Partners
+    company_type = models.CharField(max_length=3, null=True)
+    code = models.IntegerField(null=True)
+    IIN = models.CharField(max_length=15, null=True)
+    contract = models.FileField(upload_to='media/contracts/', null=True)
 
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
@@ -57,7 +63,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['role', 'city', 'name', 'surname']
+    REQUIRED_FIELDS = ['role', 'city', 'name', 'surname', 'phone', 'address', 'job_title', 'company_name']
 
     def __str__(self):
         return f'{self.email}'

@@ -1,3 +1,4 @@
 from applications.views.ApplicationView import ApplicationViewSet
 from applications.views.CreateFirstApplication import create_first_application
+from applications.views.ServiceCategoryView import ServiceCategoryView
 from applications.views.ServiceView import ServiceViewSet

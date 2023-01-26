@@ -1,4 +1,5 @@
 from django.contrib.auth.tokens import default_token_generator
+from django_filters.rest_framework import DjangoFilterBackend
 from djoser import utils
 from djoser.compat import get_user_email
 from djoser.conf import settings
@@ -8,7 +9,7 @@ from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from users import services, serializers, permissions, email, exceptions, models
+from users import services, serializers, permissions, email, exceptions, models, filters
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -16,6 +17,8 @@ class UserViewSet(viewsets.ModelViewSet):
     token_generator = default_token_generator
     user_service = services.UserService()
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = filters.UsersFilter
 
     def permission_denied(self, request, **kwargs):
         if (
@@ -248,6 +251,15 @@ class UserViewSet(viewsets.ModelViewSet):
     #         to = [get_user_email(serializer.user)]
     #         settings.EMAIL.username_changed_confirmation(self.request, context).send(to)
     #     return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(['head'], detail=False, url_path=r'exists/(?P<user_email>[^/]+)')
+    def exists(self, request, user_email):
+        try:
+            print(user_email)
+            models.User.objects.get(email=user_email)
+            return Response(status=status.HTTP_200_OK)
+        except models.User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
     @action(['get'], detail=True)
     def activate(self, request, pk, *args, **kwargs):

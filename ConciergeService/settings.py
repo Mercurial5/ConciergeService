@@ -45,11 +45,14 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'django_filters',
+    'channels',
 
     'users',
     'applications',
     'partner_services',
-    'documents'
+    'documents',
+    'docs_downloader',
+    'chat'
 ]
 
 MIDDLEWARE = [
@@ -79,7 +82,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ConciergeService.wsgi.application'
+# WSGI_APPLICATION = 'ConciergeService.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -166,3 +169,13 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = environ['EMAIL_HOST_USER']
 EMAIL_HOST_PASSWORD = environ['EMAIL_HOST_PASSWORD']
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
+ASGI_APPLICATION = 'chat.routing.application'
+
+

@@ -23,5 +23,8 @@ urlpatterns = [
     path('api/users/', include('users.urls')),
     path('api/applications/', include('applications.urls')),
     path('api/partner-services/', include('partner_services.urls')),
-    path('api/documents/', include('documents.urls'))
+    path('api/documents/', include('documents.urls')),
+    path('api/chats/', include('chat.urls')),
+    
+    path('media/', include('docs_downloader.urls'))
 ]

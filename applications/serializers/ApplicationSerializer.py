@@ -28,7 +28,7 @@ class ApplicationSerializer(serializers.ModelSerializer):
 class _ApplicationServicesCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Service
-        fields = ['category', 'description']
+        fields = ['category', 'description', 'date_from', 'date_to']
 
 
 class ApplicationCreateSerializer(serializers.ModelSerializer):
