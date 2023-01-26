@@ -15,6 +15,8 @@ class ApplicationServiceInterface(Protocol):
 
     def get_list(self) -> QuerySet[models.Application]: ...
 
+    def get(self, pk: int) -> models.Application: ...
+
 
 class ApplicationService:
 
@@ -26,3 +28,6 @@ class ApplicationService:
 
     def get_list(self) -> QuerySet[models.Application]:
         return self.repo.get_list()
+
+    def get(self, pk: int) -> models.Application:
+        return self.repo.get(pk)

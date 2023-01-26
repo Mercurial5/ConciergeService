@@ -10,6 +10,8 @@ class ServiceRepositoryInterface(Protocol):
 
     def get_list(self, **kwargs) -> QuerySet[models.Service]: ...
 
+    def get(self, pk: int) -> models.Service: ...
+
 
 class ServiceRepository:
     model = models.Service
@@ -19,3 +21,6 @@ class ServiceRepository:
 
     def get_list(self, **kwargs) -> QuerySet[models.Service]:
         return self.model.objects.filter(**kwargs).all()
+
+    def get(self, pk: int) -> models.Service:
+        return self.model.objects.get(pk=pk)

@@ -1,14 +1,20 @@
 from typing import Type
 
 from django_filters.rest_framework import DjangoFilterBackend
+from djoser.compat import get_user_email
 from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from applications import serializers, services, exceptions, filters
+from users.models import User
+from users.permissions import IsAdmin, IsManager
 from users.services import UserService
-from users.permissions import IsAdmin
+from users import email
+
+from chat import models
 
 
 class ApplicationViewSet(ModelViewSet):
@@ -55,3 +61,44 @@ class ApplicationViewSet(ModelViewSet):
         serializer = self.get_serializer(service)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(methods=['GET'], detail=True, permission_classes=[IsManager])
+    def take(self, request, pk: int, *args, **kwargs):
+        try:
+            application = self.service.get(pk)
+        except models.Application.DoesNotExist as e:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        if application.manager is not None:
+            return Response({'detail': 'This application already have been taken'}, status=status.HTTP_400_BAD_REQUEST)
+
+        application.manager_id = self.request.user.id
+        application.status_id = 2
+        application.save(update_fields=['manager_id', 'status_id'])
+
+        owner: User = application.owner
+        if not owner.is_active:
+            user_service = UserService()
+            password = user_service.set_password(owner)
+            user_service.activate(owner)
+
+            context = {'user': owner, 'password': password}
+            to = [get_user_email(owner)]
+
+            email.ActivationEmail(self.request, context).send(to)
+
+        chat = models.Chat.objects.create(application=application, manager=self.request.user, collocutor=owner)
+
+        starred_type = models.MessageType.objects.get(name='starred')
+        for service in application.services.all():
+            msg = f'Категория: {service.category.name}\n\n'
+
+            if service.date_from:
+                msg += f'С: {service.date_from}\n'
+            if service.date_to:
+                msg += f'До: {service.date_to}\n'
+
+            msg += f'\n{service.description}'
+            chat.message_set.create(sender=owner, type=starred_type, content=msg)
+
+        return Response({}, status=status.HTTP_200_OK)

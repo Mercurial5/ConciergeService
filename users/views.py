@@ -261,7 +261,7 @@ class UserViewSet(viewsets.ModelViewSet):
         except models.User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-    @action(['get'], detail=True)
+    @action(['get'], detail=True, permission_classes=[permissions.IsManager])
     def activate(self, request, pk, *args, **kwargs):
         try:
             user = self.user_service.get(pk)

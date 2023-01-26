@@ -13,6 +13,8 @@ class ApplicationRepositoryInterface(Protocol):
 
     def get_list(self) -> QuerySet[models.Application]: ...
 
+    def get(self, pk: int) -> models.Application: ...
+
 
 class ApplicationRepository:
     model = models.Application
@@ -46,3 +48,6 @@ class ApplicationRepository:
 
     def get_list(self) -> QuerySet[models.Application]:
         return self.model.objects.all()
+
+    def get(self, pk: int) -> models.Application:
+        return self.model.objects.get(pk=pk)
