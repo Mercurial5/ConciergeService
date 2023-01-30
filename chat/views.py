@@ -28,6 +28,25 @@ class ChatViewSet(ModelViewSet):
 
         return [permission() for permission in permission_classes]
 
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.collocutor = instance.collocutor if instance.manager.id == request.user.id else instance.manager
+        serializer = serializers.ChatReadSerializer(instance)
+        return Response(serializer.data)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        for chat in queryset:
+            chat.collocutor = chat.collocutor if chat.manager.id == request.user.id else chat.manager
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = serializers.ChatReadSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = serializers.ChatReadSerializer(queryset, many=True)
+        return Response(serializer.data)
+
     def create(self, request, *args, **kwargs):
         request.data['manager'] = self.request.user.id
 
