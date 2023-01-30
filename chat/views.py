@@ -2,6 +2,7 @@ from typing import Type
 
 from django.db.models import Q
 from rest_framework import status
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -10,10 +11,17 @@ from chat import serializers, models
 from users.permissions import IsManager
 
 
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 100
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+
+
 class ChatViewSet(ModelViewSet):
     serializer_class = serializers.ChatSerializer
     queryset = models.Chat.objects.all()
     permission_classes: list[Type[BasePermission]] = [IsAuthenticated]
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         current_user = self.request.user
