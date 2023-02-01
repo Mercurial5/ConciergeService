@@ -6,10 +6,17 @@ from djoser.conf import settings
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.exceptions import NotFound
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from users import services, serializers, permissions, email, exceptions, models, filters
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 10
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -19,6 +26,7 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
     filterset_class = filters.UsersFilter
+    pagination_class = StandardResultsSetPagination
 
     def permission_denied(self, request, **kwargs):
         if (
