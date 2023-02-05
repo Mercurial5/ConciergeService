@@ -10,5 +10,11 @@
     "fields": {
       "name": "starred"
     }
+  },
+  {
+    "model": "chat.MessageType",
+    "fields": {
+      "name": "default"
+    }
   }
 ]
