@@ -4,17 +4,32 @@ from django_filters.rest_framework import DjangoFilterBackend
 from djoser.compat import get_user_email
 from rest_framework import status
 from rest_framework.decorators import action
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from applications import serializers, services, exceptions, filters
+from chat import models
+from users import email
 from users.models import User
 from users.permissions import IsAdmin, IsManager
 from users.services import UserService
-from users import email
 
-from chat import models
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 10
+
+    def get_paginated_response(self, data):
+        return Response({
+            'next': self.get_next_link(),
+            'previous': self.get_previous_link(),
+            'count': self.page.paginator.count,
+            'total_pages': self.page.paginator.num_pages,
+            'results': data
+        })
 
 
 class ApplicationViewSet(ModelViewSet):
@@ -23,6 +38,7 @@ class ApplicationViewSet(ModelViewSet):
     permission_classes: list[Type[BasePermission]] = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend]
     filterset_class = filters.ApplicationFilter
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         user = self.request.user
