@@ -48,6 +48,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     job_title = models.CharField(max_length=255, null=True)
     company_name = models.CharField(max_length=255, null=True)
 
+    specialization = models.CharField(max_length=255, null=True)
+
     # Partners
     company_type = models.CharField(max_length=3, null=True)
     code = models.IntegerField(null=True)
